@@ -1,25 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './Components/Navbar';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Home from './Components/pages/Home';
+import DesginIdea from './Components/pages/DesignIdea';
+import About from './Components/pages/About';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Chess but Cool</h1>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          The future platform for Adam and Austin's CS378 program
-        </p>
-        <a
-          className="App-link"
-          href="www.whitworth.edu"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Whitworth University
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Navbar />
+        <h1>AHHHHHHHHHHHHHHh</h1>
+        <Home></Home>
+        <Routes>
+          <Route path ="/" exact component={Home}/>
+          <Route path='/about' component={About} />
+          <Route path='/designIdea' component={DesginIdea} />
+        </Routes>
+      </Router>
+      
+    </>
   );
 }
 
