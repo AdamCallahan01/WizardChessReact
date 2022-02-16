@@ -2,7 +2,7 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Home from './Components/pages/Home';
-import DesginIdea from './Components/pages/DesignIdea';
+import DesignIdea from './Components/pages/DesignIdea';
 import About from './Components/pages/About';
 
 function App() {
@@ -10,14 +10,13 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <h1>AHHHHHHHHHHHHHHh</h1>
-        <Home></Home>
-        <Routes>
-          <Route path ="/" exact component={Home}/>
-          <Route path='/about' component={About} />
-          <Route path='/designIdea' component={DesginIdea} />
+         <Routes>
+          <Route path ="/" element={<Home />}/>
+          <Route path='/about' element={<About />} />
+          <Route path='/design' element={<DesignIdea/>} />
         </Routes>
       </Router>
+
       
     </>
   );
