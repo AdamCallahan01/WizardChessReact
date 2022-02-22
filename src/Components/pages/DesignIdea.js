@@ -1,7 +1,10 @@
 import React from 'react';
 import '../../App.css';
-import DefaultPage from '../DefaultPage';
-
+import { Button } from '../Button';
+import CombineTwo from '../../images/CombineTwo.png';
+import PlaceTwoPawns from '../../images/PlaceTwoPawns.png';
+import RemovePiece from '../../images/RemovePiece.png';
+import Slideshow from '../Slideshow';
 
 function DesignIdea() {
   return (
@@ -16,8 +19,9 @@ function DesignIdea() {
         <li>5.	Make the game playable over the website</li>
         <li>6.	Create new ways to win</li>
       </ul>
-      <img src="./public/images/CHess.jpg"></img>
+      <p><big>Game Abilities:</big></p>
     </div>
+    <Slideshow></Slideshow>
     </>
   );
 }

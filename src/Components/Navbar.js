@@ -59,6 +59,15 @@ function Navbar() {
                 Design Idea
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                to='/layouts'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Layouts
+              </Link>
+            </li>
 
             <li>
               <Link
