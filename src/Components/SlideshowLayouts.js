@@ -1,8 +1,9 @@
 import React from 'react';
 import { Slide } from 'react-slideshow-image';
-import CombineTwo from '../images/CombineTwo.png';
-import PlaceTwoPawns from '../images/PlaceTwoPawns.png';
-import RemovePiece from '../images/RemovePiece.png';
+import image1 from '../images/chess set up knight.png';
+import image2 from '../images/chess set up pawns.png';
+import image3 from '../images/chesss set up bishop.png';
+import image4 from '../images/chessse t up queen.png';
 import 'react-slideshow-image/dist/styles.css'
 
 const slideImages = [
@@ -17,17 +18,22 @@ const Slideshow = () => {
         <Slide easing="ease">
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[0]})`}}>
-              <img src={CombineTwo}></img>
+              <img src={image1}></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[1]})`}}>
-            <img src={PlaceTwoPawns}></img>
+            <img src={image2}></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[2]})`}}>
-            <img src={RemovePiece}></img>
+            <img src={image3}></img>
+            </div>
+          </div>
+          <div className="each-slide">
+            <div className="img-format" style={{'backgroundImage': `url(${slideImages[2]})`}}>
+            <img src={image4}></img>
             </div>
           </div>
         </Slide>
