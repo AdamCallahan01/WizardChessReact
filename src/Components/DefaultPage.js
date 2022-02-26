@@ -2,6 +2,8 @@ import React from 'react';
 import '../App.css';
 import { Button } from './Button';
 import './DefaultPage.css';
+import { Link } from 'react-router-dom';
+
 
 function DefaultPage() {
   return (
@@ -13,6 +15,7 @@ function DefaultPage() {
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
+          onClick={<Link to='/layouts'></Link>}
         >
           Play the game!
         </Button>
