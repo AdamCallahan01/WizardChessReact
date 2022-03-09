@@ -46,6 +46,7 @@ export default function PlayVsPlay({ boardWidth }) {
             game.reset();
           });
           chessboardRef.current.clearPremoves();
+          document.getElementById("test3").style.visibility="visible";
         }}
       >
         reset
@@ -57,6 +58,7 @@ export default function PlayVsPlay({ boardWidth }) {
             game.undo();
           });
           chessboardRef.current.clearPremoves();
+          document.getElementById("test3").style.visibility="hidden";
         }}
       >
         undo
