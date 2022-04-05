@@ -3,13 +3,14 @@ import Chess from 'chess.js';
 
 import { Chessboard } from 'react-chessboard';
 
+var whiteLayout = "PPPPPPPP/RNBQKBNR";  // Used to save what layout is set
+var blackLayout = "rnbqkbnr/pppppppp";
+var whiteRows = 2;   //Used to save how many rows
+var blackRows = 2;
+
 export default function PlayVsPlay({ boardWidth }) {
   const chessboardRef = useRef();
   const [game, setGame] = useState(new Chess());
-  var whiteLayout = "PPPPPPPP/RNBQKBNR";  // Used to save what layout is set
-  var blackLayout = "rnbqkbnr/pppppppp";
-  var whiteRows = 2;   //Used to save how many rows
-  var blackRows = 2;
 
   function safeGameMutate(modify) {
     setGame((g) => {
@@ -75,6 +76,7 @@ export default function PlayVsPlay({ boardWidth }) {
         onClick={() => {
           whiteRows = 2;
           whiteLayout = "3QQ3/Q3K2Q";
+          console.log(whiteLayout);
           safeGameMutate((game) => {
             switch(blackRows) {
               case 1:
@@ -159,11 +161,13 @@ export default function PlayVsPlay({ boardWidth }) {
           safeGameMutate((game) => {
             blackRows = 2;
             blackLayout = 'q3k2q/3qq3';
+            console.log(blackLayout);
             switch(whiteRows) {
               case 1:
                 game.load('q3k2q/3qq3/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
               case 2:
                 game.load('q3k2q/3qq3/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                console.log(whiteLayout);
               case 3:
                 game.load('q3k2q/3qq3/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
               case 4:
@@ -233,6 +237,58 @@ export default function PlayVsPlay({ boardWidth }) {
         }}
       >
         Pawns
+      </button>
+    </div>
+    <div>
+      <h1>Abilities:</h1>
+    <button
+        className="rc-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.turn();
+          });
+          chessboardRef.current.clearPremoves();
+        }}
+      >
+        Extra Turn
+      </button>
+      <button
+        className="rc-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.remove('d4');
+            game.remove('d5');
+            game.remove('e4');
+            game.remove('e5');
+          });
+          chessboardRef.current.clearPremoves();
+        }}
+      >
+        Nuke the middle
+      </button>
+      <button
+        className="rc-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.put({ type: 'p', color: 'w' }, 'd3');
+            game.put({ type: 'p', color: 'w' }, 'e3');
+          });
+          chessboardRef.current.clearPremoves();
+        }}
+      >
+        Pawn Drop White
+      </button>
+      <button
+        className="rc-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.put({ type: 'p', color: 'b' }, 'd6');
+            game.put({ type: 'p', color: 'b' }, 'e6');
+          });
+          chessboardRef.current.clearPremoves();
+        }}
+      >
+        Pawn Drop Black
       </button>
     </div>
     </>
