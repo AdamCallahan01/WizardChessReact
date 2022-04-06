@@ -3,7 +3,7 @@ import Chess from 'chess.js';
 import { Chessboard } from 'react-chessboard';
 import './Chessboard.css';
 import useSound from 'use-sound';
-import moveSound from '../Media/pieceMove.wav';
+import moveSound from '../Media/pieceMovemp3.mp3';
 import bB from '../Media/bB.png';
 import bK from '../Media/bK.png';
 import bN from '../Media/bN.png';
