@@ -36,9 +36,6 @@ export default function PlayVsPlay({ boardWidth }) {
     moveSound,
     { volume: 0.25 }
   );
-  GameHistoryString = game.history();
-  console.log(GameHistoryString);
-  document.getElementById("History").innerHTML = GameHistoryString;
 
   function safeGameMutate(modify) {
     setGame((g) => {
@@ -55,8 +52,15 @@ export default function PlayVsPlay({ boardWidth }) {
       to: targetSquare,
       promotion: 'q' // always promote to a queen for example simplicity
     });
+    GameHistoryString = game.history();
+    document.getElementById("History").innerHTML = GameHistoryString;
     playOnMove();
     setGame(gameCopy);
+    var x = document.getElementsByClassName("pregame");
+    console.log(x);
+    for (var i = 0; i < x.length; i++) {
+      x[i].style.visibility = "hidden";
+    }
     if (gameCopy.game_over()) {
       document.getElementById("GameOver").style.visibility = "visible";
     }
@@ -151,6 +155,7 @@ export default function PlayVsPlay({ boardWidth }) {
           safeGameMutate((game) => {
             game.reset();
           });
+          document.getElementById("History").innerHTML = "Game has not started";
           chessboardRef.current.clearPremoves();
         }}
       >
@@ -167,12 +172,13 @@ export default function PlayVsPlay({ boardWidth }) {
       >
         undo
       </button>
-      <h1 id="History">Game Over!</h1>
+      <h1 id="History">Game has not started</h1>
       <h1 class="GameOver" id="GameOver">Game Over!</h1>
     </div>
     <div>
       <h1>White Layouts:</h1>
       <button
+        className="pregame"
         onClick={() => {
           whiteRows = 2;
           whiteLayout = "3QQ3/Q3K2Q";
@@ -194,6 +200,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Queens
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             whiteRows = 3;
@@ -214,6 +221,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Knights
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => { 
             whiteRows = 3; 
@@ -234,6 +242,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Bishops
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             whiteRows = 4;
@@ -254,6 +263,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Pawns
       </button>
       <button
+        className="pregame"
         onClick={() => {
           whiteRows = 1;
           whiteLayout = "RRRRKRRR";
@@ -278,6 +288,7 @@ export default function PlayVsPlay({ boardWidth }) {
     <div>
       <h1>Black Layouts:</h1>    
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             blackRows = 2;
@@ -300,6 +311,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Queens
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             blackRows = 3;
@@ -320,6 +332,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Knights
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             blackRows = 3;
@@ -340,6 +353,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Bishops
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             blackRows = 4;
@@ -360,6 +374,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Pawns
       </button>
       <button
+        className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
             blackRows = 1;

@@ -1,3 +1,11 @@
 h1.GameOver {
     visibility: hidden;
 }
+
+button.rc-button {
+    visibility: visible;
+}
+
+button.pregame {
+    visibility: visible;
+}
