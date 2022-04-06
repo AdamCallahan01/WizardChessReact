@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import Chess from 'chess.js';
 import { Chessboard } from 'react-chessboard';
-import './Chessboard.css';
+// import './Chessboard.css';
 import useSound from 'use-sound';
 import moveSound from '../Media/pieceMove.wav';
 import bB from '../Media/bB.png';
@@ -131,7 +131,7 @@ export default function PlayVsPlay({ boardWidth }) {
 
   return (
     <>
-    <div>
+    <div class="board">
       <Chessboard
         id="Chess"
         animationDuration={1}
@@ -420,6 +420,7 @@ export default function PlayVsPlay({ boardWidth }) {
             game.remove('d5');
             game.remove('e4');
             game.remove('e5');
+            game.load(game.fen());
           });
           chessboardRef.current.clearPremoves();
         }}
@@ -452,7 +453,7 @@ export default function PlayVsPlay({ boardWidth }) {
       </button>
     </div>
     <div>
-      <h1>Custimizations:</h1>
+      <h1>Cus-Tim-izations:</h1>
       <button
         className="rc-button"
         onClick={() => {

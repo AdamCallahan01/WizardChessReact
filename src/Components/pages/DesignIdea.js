@@ -1,9 +1,5 @@
 import React from 'react';
 import '../../App.css';
-import { Button } from '../Button';
-import CombineTwo from '../../images/CombineTwo.png';
-import PlaceTwoPawns from '../../images/PlaceTwoPawns.png';
-import RemovePiece from '../../images/RemovePiece.png';
 import Slideshow from '../Slideshow';
 
 function DesignIdea() {
