@@ -3,7 +3,7 @@ import Chess from 'chess.js';
 import { Chessboard } from 'react-chessboard';
 import './Chessboard.css';
 import useSound from 'use-sound';
-import moveSound from '../Media/pieceMovemp3.mp3';
+import moveSound from '../Media/pieceMove.wav';
 import bB from '../Media/bB.png';
 import bK from '../Media/bK.png';
 import bN from '../Media/bN.png';
@@ -27,6 +27,7 @@ var darkSquares = customColors[2];
 var lightSquares = customColors[3];
 var changePieces = false;
 var gameOver = false;
+var GameHistoryString = "";
 
 export default function PlayVsPlay({ boardWidth }) {
   const chessboardRef = useRef();
@@ -35,6 +36,9 @@ export default function PlayVsPlay({ boardWidth }) {
     moveSound,
     { volume: 0.25 }
   );
+  GameHistoryString = game.history();
+  console.log(GameHistoryString);
+  document.getElementById("History").innerHTML = GameHistoryString;
 
   function safeGameMutate(modify) {
     setGame((g) => {
@@ -54,7 +58,7 @@ export default function PlayVsPlay({ boardWidth }) {
     playOnMove();
     setGame(gameCopy);
     if (gameCopy.game_over()) {
-      document.getElementsByClassName("test").style.visibility = "visible";
+      document.getElementById("GameOver").style.visibility = "visible";
     }
     return move;
   }
@@ -163,7 +167,8 @@ export default function PlayVsPlay({ boardWidth }) {
       >
         undo
       </button>
-      <h1 class="test">Game Over!</h1>
+      <h1 id="History">Game Over!</h1>
+      <h1 class="GameOver" id="GameOver">Game Over!</h1>
     </div>
     <div>
       <h1>White Layouts:</h1>
