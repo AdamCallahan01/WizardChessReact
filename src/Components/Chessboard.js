@@ -26,7 +26,6 @@ var customColors = ['#b48464', '#ecdcb4', '#e28743', '#eab676', '#779952', '#ede
 var darkSquares = customColors[2];
 var lightSquares = customColors[3];
 var changePieces = false;
-var gameOver = false;
 var GameHistoryString = "";
 
 export default function PlayVsPlay({ boardWidth }) {
@@ -57,7 +56,6 @@ export default function PlayVsPlay({ boardWidth }) {
     playOnMove();
     setGame(gameCopy);
     var x = document.getElementsByClassName("pregame");
-    console.log(x);
     for (var i = 0; i < x.length; i++) {
       x[i].style.visibility = "hidden";
     }
@@ -155,7 +153,12 @@ export default function PlayVsPlay({ boardWidth }) {
           safeGameMutate((game) => {
             game.reset();
           });
+          var x = document.getElementsByClassName("pregame");
+          for (var i = 0; i < x.length; i++) {
+            x[i].style.visibility = "visible";
+          }
           document.getElementById("History").innerHTML = "Game has not started";
+          document.getElementById("GameOver").style.visibility = "hidden";
           chessboardRef.current.clearPremoves();
         }}
       >
