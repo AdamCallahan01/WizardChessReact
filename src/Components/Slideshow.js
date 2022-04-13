@@ -17,17 +17,17 @@ const Slideshow = () => {
         <Slide easing="ease">
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[0]})`}}>
-              <img src={CombineTwo}></img>
+              <img src={CombineTwo} alt="useful"></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[1]})`}}>
-            <img src={PlaceTwoPawns}></img>
+            <img src={PlaceTwoPawns} alt="useful"></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[2]})`}}>
-            <img src={RemovePiece}></img>
+            <img src={RemovePiece} alt="useful"></img>
             </div>
           </div>
         </Slide>

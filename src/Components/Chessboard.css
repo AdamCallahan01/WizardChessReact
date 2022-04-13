@@ -2,16 +2,61 @@ h1.GameOver {
     visibility: hidden;
 }
 
-div.board {
-    align-items: center;
-    background-color: rgb(158, 107, 206);
-    display: block;
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 50px;
+.outerDiv {
+    background-color: red;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-gap: 10px;
 }
 
-button.rc-button {
+.board {
+    float: center;
+    padding: 20px;
+    border: 2px solid black;
+    grid-row-end: span 2;
+}
+
+.board > button {
+    padding: 25px 25px;
+}
+
+.Chesstext {
+    text-align: center;
+    word-break: break-all;
+}
+
+.layoutsWhite {
+    float: center;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.layoutsBlack {
+    float: left;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.abilitiesWhite {
+    float: left;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.abilitiesBlack {
+    float: left;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.customizations {
+    float: left;
+    padding: 20px;
+    border: 2px solid black;
+    grid-column-end: span 3;
+}
+
+button.customization-button {
     visibility: visible;
     display: inline-block;
     padding: .75rem 1.25rem;
@@ -27,11 +72,41 @@ button.rc-button {
 }
 
 button.pregame {
-    visibility: visible;
+    background-color: #4CAF50;
+    border: 5px solid blue;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    transition-duration: .4s;
 }
 
-#Chess {
-    margin-left: 400px;
-    vertical-align: middle;
+button.pregame:hover {
+    background-color: #2c6e2e;
+    color: white;
+}
 
+button.ability-button {
+    background-color: #4CAF50;
+    border: 5px solid blue;
+    color: black;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    transition-duration: .4s;
+}
+
+button.ability-button:hover {
+    background-color: #2c6e2e;
+    color: white;
+}
+
+button.pregame {
+    visibility: visible;
 }

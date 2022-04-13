@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import Chess from 'chess.js';
 import { Chessboard } from 'react-chessboard';
-// import './Chessboard.css';
+import './Chessboard.css';
 import useSound from 'use-sound';
 import moveSound from '../Media/pieceMove.wav';
 import bB from '../Media/bB.png';
@@ -112,6 +112,8 @@ export default function PlayVsPlay({ boardWidth }) {
         case 'bR':
           x = bR;
           break;
+        default:
+          break;
       }
       returnPieces[p] = ({ squareWidth }) => (
         <div
@@ -130,7 +132,147 @@ export default function PlayVsPlay({ boardWidth }) {
   };
 
   return (
-    <>
+    <div class='outerDiv'>
+    <div class="layoutsWhite">
+      <h1>White Layouts:</h1>
+      <button
+        className="pregame"
+        onClick={() => {
+          whiteRows = 2;
+          whiteLayout = "3QQ3/Q3K2Q";
+          console.log(whiteLayout);
+          safeGameMutate((game) => {
+            switch(blackRows) {
+              case 1:
+                game.load(blackLayout + '/8/8/8/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
+                break;
+              case 2:
+                game.load(blackLayout + '/8/8/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
+                break;
+              case 3:
+                game.load(blackLayout + '/8/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
+                break;
+              case 4:
+                game.load(blackLayout + '/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
+                break;
+              default:
+                break;
+            }
+          });
+        }}
+      >
+        Queens
+      </button>
+      <button
+        className="pregame"
+        onClick={() => {
+          safeGameMutate((game) => {
+            whiteRows = 3;
+            whiteLayout = '1N1NN1N1/3NN3/N1NQKN1N';
+            switch(blackRows) {
+              case 1:
+                game.load(blackLayout + '/8/8/8/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
+                break;
+              case 2:
+                game.load(blackLayout + '/8/8/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
+                break;
+              case 3:
+                game.load(blackLayout + '/8/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
+                break;
+              case 4:
+                game.load(blackLayout + '/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
+                break;
+              default:
+                break;
+            }
+          });
+        }}
+      >
+        Knights
+      </button>
+      <button
+        className="pregame"
+        onClick={() => {
+          safeGameMutate((game) => { 
+            whiteRows = 3; 
+            whiteLayout = 'B6B/BB4BB/BB2K1BB';
+            switch(blackRows) {
+              case 1:
+                game.load(blackLayout + '/8/8/8/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
+                break;
+              case 2:
+                game.load(blackLayout + '/8/8/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
+                break;
+              case 3:
+                game.load(blackLayout + '/8/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
+                break;
+              case 4:
+                game.load(blackLayout + '/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
+                break;
+              default:  
+                break;
+            }
+          });
+        }}
+      >
+        Bishops
+      </button>
+      <button
+        className="pregame"
+        onClick={() => {
+          safeGameMutate((game) => {
+            whiteRows = 4;
+            whiteLayout = 'PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R';
+            switch(blackRows) {
+              case 1:
+                game.load(blackLayout + '/8/8/8/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
+                break;
+              case 2:
+                game.load(blackLayout + '/8/8/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
+                break;
+              case 3:
+                game.load(blackLayout + '/8/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
+                break;
+              case 4:
+                game.load(blackLayout + '/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
+                break;
+              default:
+                break;
+            }
+          });
+        }}
+      >
+        Pawns
+      </button>
+      <button
+        className="pregame"
+        onClick={() => {
+          whiteRows = 1;
+          whiteLayout = "RRRRKRRR";
+          console.log(whiteLayout);
+          safeGameMutate((game) => {
+            switch(blackRows) {
+              case 1:
+                game.load(blackLayout + '/8/8/8/8/8/8/RRRRKRRR w KQkq - 0 1');
+                break;
+              case 2:
+                game.load(blackLayout + '/8/8/8/8/8/RRRRKRRR w KQkq - 0 1');
+                break;
+              case 3:
+                game.load(blackLayout + '/8/8/8/8/RRRRKRRR w KQkq - 0 1');
+                break;
+              case 4:
+                game.load(blackLayout + '/8/8/8/RRRRKRRR w KQkq - 0 1');
+                break;
+              default:
+                break;
+            }
+          });
+        }}
+      >
+        Rooks
+      </button>
+    </div>
     <div class="board">
       <Chessboard
         id="Chess"
@@ -139,7 +281,7 @@ export default function PlayVsPlay({ boardWidth }) {
         position={game.fen()}
         onPieceDrop={onDrop}
         customBoardStyle={{
-          borderRadius: '4px',
+          borderRadius: '10px',
           boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)'
         }}
         customDarkSquareStyle={{ backgroundColor: darkSquares }}
@@ -175,120 +317,10 @@ export default function PlayVsPlay({ boardWidth }) {
       >
         undo
       </button>
-      <h1 id="History">Game has not started</h1>
-      <h1 class="GameOver" id="GameOver">Game Over!</h1>
+      <h1 class="Chesstext" id="History">Game has not started</h1>
+      <h1 class="Chesstext" id="GameOver">Game Over!</h1>
     </div>
-    <div>
-      <h1>White Layouts:</h1>
-      <button
-        className="pregame"
-        onClick={() => {
-          whiteRows = 2;
-          whiteLayout = "3QQ3/Q3K2Q";
-          console.log(whiteLayout);
-          safeGameMutate((game) => {
-            switch(blackRows) {
-              case 1:
-                game.load(blackLayout + '/8/8/8/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
-              case 2:
-                game.load(blackLayout + '/8/8/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
-              case 3:
-                game.load(blackLayout + '/8/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
-              case 4:
-                game.load(blackLayout + '/8/8/3QQ3/Q3K2Q w KQkq - 0 1');
-            }
-          });
-        }}
-      >
-        Queens
-      </button>
-      <button
-        className="pregame"
-        onClick={() => {
-          safeGameMutate((game) => {
-            whiteRows = 3;
-            whiteLayout = '1N1NN1N1/3NN3/N1NQKN1N';
-            switch(blackRows) {
-              case 1:
-                game.load(blackLayout + '/8/8/8/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
-              case 2:
-                game.load(blackLayout + '/8/8/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
-              case 3:
-                game.load(blackLayout + '/8/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
-              case 4:
-                game.load(blackLayout + '/8/1N1NN1N1/3NN3/N1NQKN1N w KQkq - 0 1');
-            }
-          });
-        }}
-      >
-        Knights
-      </button>
-      <button
-        className="pregame"
-        onClick={() => {
-          safeGameMutate((game) => { 
-            whiteRows = 3; 
-            whiteLayout = 'B6B/BB4BB/BB2K1BB';
-            switch(blackRows) {
-              case 1:
-                game.load(blackLayout + '/8/8/8/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
-              case 2:
-                game.load(blackLayout + '/8/8/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
-              case 3:
-                game.load(blackLayout + '/8/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
-              case 4:
-                game.load(blackLayout + '/8/B6B/BB4BB/BB2K1BB w KQkq - 0 1');
-            }
-          });
-        }}
-      >
-        Bishops
-      </button>
-      <button
-        className="pregame"
-        onClick={() => {
-          safeGameMutate((game) => {
-            whiteRows = 4;
-            whiteLayout = 'PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R';
-            switch(blackRows) {
-              case 1:
-                game.load(blackLayout + '/8/8/8/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
-              case 2:
-                game.load(blackLayout + '/8/8/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
-              case 3:
-                game.load(blackLayout + '/8/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
-              case 4:
-                game.load(blackLayout + '/PPPPPPPP/PPPPPPPP/PPPPPPPP/R1R1KR1R w KQkq - 0 1');
-            }
-          });
-        }}
-      >
-        Pawns
-      </button>
-      <button
-        className="pregame"
-        onClick={() => {
-          whiteRows = 1;
-          whiteLayout = "RRRRKRRR";
-          console.log(whiteLayout);
-          safeGameMutate((game) => {
-            switch(blackRows) {
-              case 1:
-                game.load(blackLayout + '/8/8/8/8/8/8/RRRRKRRR w KQkq - 0 1');
-              case 2:
-                game.load(blackLayout + '/8/8/8/8/8/RRRRKRRR w KQkq - 0 1');
-              case 3:
-                game.load(blackLayout + '/8/8/8/8/RRRRKRRR w KQkq - 0 1');
-              case 4:
-                game.load(blackLayout + '/8/8/8/RRRRKRRR w KQkq - 0 1');
-            }
-          });
-        }}
-      >
-        Rooks
-      </button>
-    </div>
-    <div>
+    <div class="layoutsBlack">
       <h1>Black Layouts:</h1>    
       <button
         className="pregame"
@@ -300,13 +332,19 @@ export default function PlayVsPlay({ boardWidth }) {
             switch(whiteRows) {
               case 1:
                 game.load('q3k2q/3qq3/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 2:
                 game.load('q3k2q/3qq3/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
                 console.log(whiteLayout);
+                break;
               case 3:
                 game.load('q3k2q/3qq3/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 4:
                 game.load('q3k2q/3qq3/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              default:
+                break;
             }
           });
         }}
@@ -322,12 +360,18 @@ export default function PlayVsPlay({ boardWidth }) {
             switch(whiteRows) {
               case 1:
                 game.load('n1nqkn1n/3nn3/1n1nn1n1/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 2:
                 game.load('n1nqkn1n/3nn3/1n1nn1n1/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 3:
                 game.load('n1nqkn1n/3nn3/1n1nn1n1/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 4:
                 game.load('n1nqkn1n/3nn3/1n1nn1n1/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              default:
+                break;
             }
           });
         }}
@@ -343,12 +387,18 @@ export default function PlayVsPlay({ boardWidth }) {
             switch(whiteRows) {
               case 1:
                 game.load('bb2k1bb/bb4bb/b6b/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 2:
                 game.load('bb2k1bb/bb4bb/b6b/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 3:
                 game.load('bb2k1bb/bb4bb/b6b/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 4:
                 game.load('bb2k1bb/bb4bb/b6b/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              default:
+                break;
             }
           });
         }}
@@ -364,12 +414,18 @@ export default function PlayVsPlay({ boardWidth }) {
             switch(whiteRows) {
               case 1:
                 game.load('r1r1kr1r/pppppppp/pppppppp/pppppppp/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 2:
                 game.load('r1r1kr1r/pppppppp/pppppppp/pppppppp/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 3:
                 game.load('r1r1kr1r/pppppppp/pppppppp/pppppppp/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 4:
                 game.load('r1r1kr1r/pppppppp/pppppppp/pppppppp/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              default:
+                break;
             }
           });
         }}
@@ -386,12 +442,18 @@ export default function PlayVsPlay({ boardWidth }) {
             switch(whiteRows) {
               case 1:
                 game.load('rrrrkrrr/8/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 2:
                 game.load('rrrrkrrr/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 3:
                 game.load('rrrrkrrr/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
               case 4:
                 game.load('rrrrkrrr/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              default:
+                break;
             }
           });
         }}
@@ -399,10 +461,10 @@ export default function PlayVsPlay({ boardWidth }) {
         Rooks
       </button>
     </div>
-    <div>
+    <div class="abilitiesWhite">
       <h1>Abilities:</h1>
     <button
-        className="rc-button"
+        className="ability-button"
         onClick={() => {
           safeGameMutate((game) => {
             game.turn();
@@ -413,7 +475,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Extra Turn
       </button>
       <button
-        className="rc-button"
+        className="ability-button"
         onClick={() => {
           safeGameMutate((game) => {
             game.remove('d4');
@@ -428,7 +490,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Nuke the middle
       </button>
       <button
-        className="rc-button"
+        className="ability-button"
         onClick={() => {
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'w' }, 'd3');
@@ -439,8 +501,37 @@ export default function PlayVsPlay({ boardWidth }) {
       >
         Pawn Drop White
       </button>
+    </div>
+    <div class="abilitiesBlack">
+      <h1>Abilities:</h1>
+    <button
+        className="ability-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.turn();
+          });
+          chessboardRef.current.clearPremoves();
+        }}
+      >
+        Extra Turn
+      </button>
       <button
-        className="rc-button"
+        className="ability-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.remove('d4');
+            game.remove('d5');
+            game.remove('e4');
+            game.remove('e5');
+            game.load(game.fen());
+          });
+          chessboardRef.current.clearPremoves();
+        }}
+      >
+        Nuke the middle
+      </button>
+      <button
+        className="ability-button"
         onClick={() => {
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'b' }, 'd6');
@@ -452,10 +543,10 @@ export default function PlayVsPlay({ boardWidth }) {
         Pawn Drop Black
       </button>
     </div>
-    <div>
-      <h1>Cus-Tim-izations:</h1>
+    <div class="customizations">
+      <h1>Customizations:</h1>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           darkSquares = customColors[0];
           lightSquares = customColors[1];
@@ -464,7 +555,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Board Colors 1
       </button>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           darkSquares = customColors[2];
           lightSquares = customColors[3];
@@ -473,7 +564,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Board Colors 2
       </button>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           darkSquares = customColors[4];
           lightSquares = customColors[5];
@@ -482,7 +573,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Board Colors 3
       </button>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           darkSquares = customColors[6];
           lightSquares = customColors[7];
@@ -491,7 +582,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Board Colors 4
       </button>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           darkSquares = customColors[8];
           lightSquares = customColors[8];
@@ -500,7 +591,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Boarderless
       </button>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           changePieces = !changePieces;
         }}
@@ -508,6 +599,6 @@ export default function PlayVsPlay({ boardWidth }) {
         Change Pieces
       </button>
     </div>
-    </>
+    </div>
   );
 }

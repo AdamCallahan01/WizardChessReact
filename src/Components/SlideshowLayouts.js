@@ -18,22 +18,22 @@ const Slideshow = () => {
         <Slide easing="ease">
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[0]})`}}>
-              <img src={image1}></img>
+              <img src={image1} alt="useful"></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[1]})`}}>
-            <img src={image2}></img>
+            <img src={image2} alt="useful"></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[2]})`}}>
-            <img src={image3}></img>
+            <img src={image3} alt="useful"></img>
             </div>
           </div>
           <div className="each-slide">
             <div className="img-format" style={{'backgroundImage': `url(${slideImages[2]})`}}>
-            <img src={image4}></img>
+            <img src={image4} alt="useful"></img>
             </div>
           </div>
         </Slide>
