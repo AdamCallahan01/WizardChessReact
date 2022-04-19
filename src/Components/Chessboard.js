@@ -27,14 +27,154 @@ var darkSquares = customColors[2];
 var lightSquares = customColors[3];
 var changePieces = false;
 var GameHistoryString = "";
+var gameStarted = false;
+var score = 0;
 
 export default function PlayVsPlay({ boardWidth }) {
   const chessboardRef = useRef();
   const [game, setGame] = useState(new Chess());
+
+  //for click to move
+  const [moveFrom, setMoveFrom] = useState('');
+  const [rightClickedSquares, setRightClickedSquares] = useState({});
+  const [moveSquares] = useState({});
+  const [optionSquares, setOptionSquares] = useState({});
+
   const [playOnMove] = useSound(
     moveSound,
     { volume: 0.25 }
   );
+
+  const whiteButtons = document.getElementsByClassName("ability-buttonW");
+  const blackButtons = document.getElementsByClassName("ability-buttonB");
+
+  //handles everything we need to process whenever a turn happens
+  function updateOnMove(gameCopy) {
+
+    var turn = gameCopy.turn();   //track who is next to play
+    if (turn === 'b') {
+      whiteButtons[0].style.visibility = "hidden";
+      whiteButtons[1].style.visibility = "hidden";
+      whiteButtons[2].style.visibility = "hidden";
+      blackButtons[0].style.visibility = "visible";
+      blackButtons[1].style.visibility = "visible";
+      blackButtons[2].style.visibility = "visible";
+    } else if (turn === 'w') {
+      blackButtons[0].style.visibility = "hidden";
+      blackButtons[1].style.visibility = "hidden";
+      blackButtons[2].style.visibility = "hidden";
+      whiteButtons[0].style.visibility = "visible";
+      whiteButtons[1].style.visibility = "visible";
+      whiteButtons[2].style.visibility = "visible";
+    }
+
+    GameHistoryString = game.history();   //display game history
+    document.getElementById("History").innerHTML = GameHistoryString;
+
+    //poorly coded score calculations
+    score = 0;
+    var gameFEN = gameCopy.fen();
+    const temp = gameFEN.split(" ");
+    var shortFEN = temp[0];
+    const scoreArray = shortFEN.split("");
+    for (var j = 0; j < scoreArray.length; j++) {
+      var c = scoreArray[j];
+      switch (c) {
+        case 'p':
+          score -= 1;
+          break;
+        case 'P':
+          score += 1;
+          break;
+        default:
+          break;
+      }
+    }
+    document.getElementById("Score").innerHTML = score;
+
+    if (gameStarted === false) {    //remove the layout buttons when game starts
+      gameStarted = true;
+      var x = document.getElementsByClassName("pregame");
+      for (var i = 0; i < x.length; i++) {
+        x[i].style.visibility = "hidden";
+      }
+    }
+
+    if (gameCopy.game_over()) {   //display message on game end
+      document.getElementById("GameOver").style.visibility = "visible";
+    }
+  }
+
+  function getMoveOptions(square) {
+    const moves = game.moves({
+      square,
+      verbose: true
+    });
+    if (moves.length === 0) {
+      return;
+    }
+
+    const newSquares = {};
+    moves.map((move) => {
+      newSquares[move.to] = {
+        background:
+          game.get(move.to) && game.get(move.to).color !== game.get(square).color
+            ? 'radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)'
+            : 'radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)',
+        borderRadius: '50%'
+      };
+      return move;
+    });
+    newSquares[square] = {
+      background: 'rgba(255, 255, 0, 0.4)'
+    };
+    setOptionSquares(newSquares);
+  }
+
+  function onSquareClick(square) {
+    setRightClickedSquares({});
+
+    function resetFirstMove(square) {
+      setMoveFrom(square);
+      getMoveOptions(square);
+    }
+
+    // from square
+    if (!moveFrom) {
+      resetFirstMove(square);
+      return;
+    }
+
+    // attempt to make move
+    const gameCopy = { ...game };
+    const move = gameCopy.move({
+      from: moveFrom,
+      to: square,
+      promotion: 'q' // always promote to a queen for example simplicity
+    });
+    setGame(gameCopy);
+    updateOnMove(gameCopy);
+
+    // if invalid, setMoveFrom and getMoveOptions
+    if (move === null) {
+      resetFirstMove(square);
+      return;
+    }
+
+    setMoveFrom('');
+    setOptionSquares({});
+  }
+
+  function onSquareRightClick(square) {
+    const colour = 'rgba(0, 0, 255, 0.4)';
+    setRightClickedSquares({
+      ...rightClickedSquares,
+      [square]:
+        rightClickedSquares[square] && rightClickedSquares[square].backgroundColor === colour
+          ? undefined
+          : { backgroundColor: colour }
+    });
+  }
 
   function safeGameMutate(modify) {
     setGame((g) => {
@@ -49,19 +189,14 @@ export default function PlayVsPlay({ boardWidth }) {
     const move = gameCopy.move({
       from: sourceSquare,
       to: targetSquare,
-      promotion: 'q' // always promote to a queen for example simplicity
+      promotion: 'q' // always promote to a queen for simplicity
     });
-    GameHistoryString = game.history();
-    document.getElementById("History").innerHTML = GameHistoryString;
-    playOnMove();
+
+    playOnMove(); //play piece move sound
     setGame(gameCopy);
-    var x = document.getElementsByClassName("pregame");
-    for (var i = 0; i < x.length; i++) {
-      x[i].style.visibility = "hidden";
-    }
-    if (gameCopy.game_over()) {
-      document.getElementById("GameOver").style.visibility = "visible";
-    }
+
+    updateOnMove(gameCopy);
+
     return move;
   }
 
@@ -279,10 +414,17 @@ export default function PlayVsPlay({ boardWidth }) {
         animationDuration={1}
         boardWidth={boardWidth}
         position={game.fen()}
+        onSquareClick={onSquareClick}
+        onSquareRightClick={onSquareRightClick}
         onPieceDrop={onDrop}
         customBoardStyle={{
           borderRadius: '10px',
           boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)'
+        }}
+        customSquareStyles={{
+          ...moveSquares,
+          ...optionSquares,
+          ...rightClickedSquares
         }}
         customDarkSquareStyle={{ backgroundColor: darkSquares }}
         customLightSquareStyle={{ backgroundColor: lightSquares }}
@@ -300,7 +442,15 @@ export default function PlayVsPlay({ boardWidth }) {
             x[i].style.visibility = "visible";
           }
           document.getElementById("History").innerHTML = "Game has not started";
+          document.getElementById("Score").innerHTML = "0";
           document.getElementById("GameOver").style.visibility = "hidden";
+          whiteButtons[0].style.visibility = "hidden";
+          whiteButtons[1].style.visibility = "hidden";
+          whiteButtons[2].style.visibility = "hidden";
+          blackButtons[0].style.visibility = "hidden";
+          blackButtons[1].style.visibility = "hidden";
+          blackButtons[2].style.visibility = "hidden";
+          gameStarted = false;
           chessboardRef.current.clearPremoves();
         }}
       >
@@ -318,6 +468,7 @@ export default function PlayVsPlay({ boardWidth }) {
         undo
       </button>
       <h1 class="Chesstext" id="History">Game has not started</h1>
+      <h1 class="Chesstext" id="Score">0</h1>
       <h1 class="Chesstext" id="GameOver">Game Over!</h1>
     </div>
     <div class="layoutsBlack">
@@ -462,9 +613,9 @@ export default function PlayVsPlay({ boardWidth }) {
       </button>
     </div>
     <div class="abilitiesWhite">
-      <h1>Abilities:</h1>
+      <h1>White Abilities:</h1>
     <button
-        className="ability-button"
+        className="ability-buttonW"
         onClick={() => {
           safeGameMutate((game) => {
             game.turn();
@@ -475,7 +626,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Extra Turn
       </button>
       <button
-        className="ability-button"
+        className="ability-buttonW"
         onClick={() => {
           safeGameMutate((game) => {
             game.remove('d4');
@@ -490,7 +641,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Nuke the middle
       </button>
       <button
-        className="ability-button"
+        className="ability-buttonW"
         onClick={() => {
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'w' }, 'd3');
@@ -503,9 +654,9 @@ export default function PlayVsPlay({ boardWidth }) {
       </button>
     </div>
     <div class="abilitiesBlack">
-      <h1>Abilities:</h1>
+      <h1>Black Abilities:</h1>
     <button
-        className="ability-button"
+        className="ability-buttonB"
         onClick={() => {
           safeGameMutate((game) => {
             game.turn();
@@ -516,7 +667,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Extra Turn
       </button>
       <button
-        className="ability-button"
+        className="ability-buttonB"
         onClick={() => {
           safeGameMutate((game) => {
             game.remove('d4');
@@ -531,7 +682,7 @@ export default function PlayVsPlay({ boardWidth }) {
         Nuke the middle
       </button>
       <button
-        className="ability-button"
+        className="ability-buttonB"
         onClick={() => {
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'b' }, 'd6');

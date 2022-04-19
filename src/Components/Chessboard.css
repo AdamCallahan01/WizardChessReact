@@ -89,7 +89,7 @@ button.pregame:hover {
     color: white;
 }
 
-button.ability-button {
+button.ability-buttonW {
     background-color: #4CAF50;
     border: 5px solid blue;
     color: black;
@@ -102,7 +102,25 @@ button.ability-button {
     transition-duration: .4s;
 }
 
-button.ability-button:hover {
+button.ability-buttonW:hover {
+    background-color: #2c6e2e;
+    color: white;
+}
+
+button.ability-buttonB {
+    background-color: #4CAF50;
+    border: 5px solid blue;
+    color: black;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    transition-duration: .4s;
+}
+
+button.ability-buttonB:hover {
     background-color: #2c6e2e;
     color: white;
 }
