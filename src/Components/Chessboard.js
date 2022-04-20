@@ -29,6 +29,8 @@ var changePieces = false;
 var GameHistoryString = "";
 var gameStarted = false;
 var score = 0;
+var whiteCooldown = 0;
+var blackCooldown = 0;
 
 export default function PlayVsPlay({ boardWidth }) {
   const chessboardRef = useRef();
@@ -47,6 +49,14 @@ export default function PlayVsPlay({ boardWidth }) {
 
   const whiteButtons = document.getElementsByClassName("ability-buttonW");
   const blackButtons = document.getElementsByClassName("ability-buttonB");
+
+  //update all of the variable HTML elements and there visibility
+  function updateAllLabels() {
+    document.getElementById("Score").innerHTML = score;
+
+    document.getElementById("whiteCooldown").innerHTML = whiteCooldown;
+    document.getElementById("blackCooldown").innerHTML = blackCooldown;
+  }
 
   //handles everything we need to process whenever a turn happens
   function updateOnMove(gameCopy) {
@@ -83,14 +93,43 @@ export default function PlayVsPlay({ boardWidth }) {
         case 'p':
           score -= 1;
           break;
+        case 'n':
+          score -= 3;
+          break;
+        case 'b':
+          score -= 3;
+          break;
+        case 'q':
+          score -= 9;
+          break;
+        case 'k':
+          score -= 999999;
+          break;
+        case 'r':
+          score -= 5;
+          break;
         case 'P':
           score += 1;
+          break;
+        case 'N':
+          score += 3;
+          break;
+        case 'B':
+          score += 3;
+          break;
+        case 'Q':
+          score += 9;
+          break;
+        case 'K':
+          score += 999999;
+          break;
+        case 'R':
+          score += 5;
           break;
         default:
           break;
       }
     }
-    document.getElementById("Score").innerHTML = score;
 
     if (gameStarted === false) {    //remove the layout buttons when game starts
       gameStarted = true;
@@ -103,6 +142,8 @@ export default function PlayVsPlay({ boardWidth }) {
     if (gameCopy.game_over()) {   //display message on game end
       document.getElementById("GameOver").style.visibility = "visible";
     }
+
+    updateAllLabels();
   }
 
   function getMoveOptions(square) {
@@ -158,8 +199,11 @@ export default function PlayVsPlay({ boardWidth }) {
     // if invalid, setMoveFrom and getMoveOptions
     if (move === null) {
       resetFirstMove(square);
+      console.log("invalid");
       return;
     }
+    whiteCooldown++;
+    blackCooldown++;
 
     setMoveFrom('');
     setOptionSquares({});
@@ -191,6 +235,11 @@ export default function PlayVsPlay({ boardWidth }) {
       to: targetSquare,
       promotion: 'q' // always promote to a queen for simplicity
     });
+
+    if (move === null) {
+      console.log("invalid");
+      return;
+    }
 
     playOnMove(); //play piece move sound
     setGame(gameCopy);
@@ -441,17 +490,20 @@ export default function PlayVsPlay({ boardWidth }) {
           for (var i = 0; i < x.length; i++) {
             x[i].style.visibility = "visible";
           }
+          score = 0;
           document.getElementById("History").innerHTML = "Game has not started";
-          document.getElementById("Score").innerHTML = "0";
           document.getElementById("GameOver").style.visibility = "hidden";
-          whiteButtons[0].style.visibility = "hidden";
-          whiteButtons[1].style.visibility = "hidden";
-          whiteButtons[2].style.visibility = "hidden";
-          blackButtons[0].style.visibility = "hidden";
-          blackButtons[1].style.visibility = "hidden";
-          blackButtons[2].style.visibility = "hidden";
+          blackButtons[0].style.visibility = "visible";
+          blackButtons[1].style.visibility = "visible";
+          blackButtons[2].style.visibility = "visible";
+          whiteButtons[0].style.visibility = "visible";
+          whiteButtons[1].style.visibility = "visible";
+          whiteButtons[2].style.visibility = "visible";
           gameStarted = false;
+          whiteCooldown = 0;
+          blackCooldown = 0;
           chessboardRef.current.clearPremoves();
+          updateAllLabels();
         }}
       >
         reset
@@ -614,20 +666,26 @@ export default function PlayVsPlay({ boardWidth }) {
     </div>
     <div class="abilitiesWhite">
       <h1>White Abilities:</h1>
+      <h2 id="whiteCooldown">0</h2>
     <button
         className="ability-buttonW"
         onClick={() => {
+        if (gameStarted && whiteCooldown > 6) {
+          whiteCooldown -= 6;
           safeGameMutate((game) => {
             game.turn();
           });
+          updateAllLabels();
           chessboardRef.current.clearPremoves();
-        }}
+        }}}
       >
-        Extra Turn
+        Merc a pawn: 6
       </button>
       <button
         className="ability-buttonW"
         onClick={() => {
+          if (gameStarted && whiteCooldown > 4) {
+            whiteCooldown -= 4;
           safeGameMutate((game) => {
             game.remove('d4');
             game.remove('d5');
@@ -635,40 +693,51 @@ export default function PlayVsPlay({ boardWidth }) {
             game.remove('e5');
             game.load(game.fen());
           });
+        }
+          updateAllLabels();
           chessboardRef.current.clearPremoves();
         }}
       >
-        Nuke the middle
+        Nuke the middle: 4
       </button>
       <button
         className="ability-buttonW"
         onClick={() => {
+          if (gameStarted && whiteCooldown > 6) {
+            whiteCooldown -= 6;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'w' }, 'd3');
             game.put({ type: 'p', color: 'w' }, 'e3');
           });
+          updateAllLabels();
           chessboardRef.current.clearPremoves();
-        }}
+        }}}
       >
-        Pawn Drop White
+        Pawn Drop White: 6
       </button>
     </div>
     <div class="abilitiesBlack">
       <h1>Black Abilities:</h1>
+      <h2 id="blackCooldown">0</h2>
     <button
         className="ability-buttonB"
         onClick={() => {
+          if (gameStarted && blackCooldown > 6) {
+            blackCooldown -= 6;
           safeGameMutate((game) => {
             game.turn();
           });
+          updateAllLabels();
           chessboardRef.current.clearPremoves();
-        }}
+        }}}
       >
-        Extra Turn
+        Merc a pawn: 6
       </button>
       <button
         className="ability-buttonB"
         onClick={() => {
+          if (gameStarted && blackCooldown > 4) {
+            blackCooldown -= 4;
           safeGameMutate((game) => {
             game.remove('d4');
             game.remove('d5');
@@ -677,21 +746,25 @@ export default function PlayVsPlay({ boardWidth }) {
             game.load(game.fen());
           });
           chessboardRef.current.clearPremoves();
-        }}
+          updateAllLabels();
+        }}}
       >
-        Nuke the middle
+        Nuke the middle: 4
       </button>
       <button
         className="ability-buttonB"
         onClick={() => {
+          if (gameStarted && blackCooldown > 6) {
+            blackCooldown -= 6;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'b' }, 'd6');
             game.put({ type: 'p', color: 'b' }, 'e6');
           });
           chessboardRef.current.clearPremoves();
-        }}
+          updateAllLabels();
+        }}}
       >
-        Pawn Drop Black
+        Pawn Drop Black: 6
       </button>
     </div>
     <div class="customizations">

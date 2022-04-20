@@ -68,6 +68,15 @@ function Navbar() {
                 Layouts
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                to='/wordle'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                VERY IMPORTANT
+              </Link>
+            </li>
 
           </ul>
           {button && <Button buttonStyle='btn--outline'>Play The Game</Button>}

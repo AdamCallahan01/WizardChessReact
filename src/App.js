@@ -6,6 +6,7 @@ import DesignIdea from './Components/pages/DesignIdea';
 import About from './Components/pages/About';
 import Layouts from './Components/pages/Layouts';
 import Game from './Components/pages/Game';
+import Wordle from './Components/pages/Wordle';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/design' element={<DesignIdea/>} />
           <Route path='/layouts' element={<Layouts/>} />
+          <Route path='/wordle' element={<Wordle/>} />
           <Route path='/game' element={<Game/>} />
         </Routes>
       </Router>

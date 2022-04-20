@@ -1,0 +1,26 @@
+.wordleBox {
+    background-color: bisque;
+    text-align: center;
+    align-items: center;
+}
+
+.console {
+    margin: auto;
+    outline: 5px solid black;
+    width: 50%;
+    align-self: center;
+}
+
+.submitBox {
+    padding: 10px;
+    margin: 25px;
+    border-radius: 2px;
+    border-color: blue;
+}
+
+.submitButton {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: aquamarine;
+}
