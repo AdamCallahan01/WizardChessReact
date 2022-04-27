@@ -52,7 +52,7 @@ export default function PlayVsPlay({ boardWidth }) {
 
   //update all of the variable HTML elements and there visibility
   function updateAllLabels() {
-    document.getElementById("Score").innerHTML = "Offset: " + score + " White: " + score + "Black: " + score;
+    document.getElementById("Score").innerHTML = "Offset: " + score + " White:  " + score + "Black: " + score;
 
     document.getElementById("whiteCooldown").innerHTML = whiteCooldown;
     document.getElementById("blackCooldown").innerHTML = blackCooldown;
@@ -509,19 +509,8 @@ export default function PlayVsPlay({ boardWidth }) {
       >
         reset
       </button>
-      <button
-        className="rc-button"
-        onClick={() => {
-          safeGameMutate((game) => {
-            game.undo();
-          });
-          chessboardRef.current.clearPremoves();
-        }}
-      >
-        undo
-      </button>
       <h1 class="Chesstext" id="History">Game has not started</h1>
-      <h1 class="Chesstext" id="Score">Offset: 0 White: 0 Black: 0</h1>
+      <h1 class="Chesstext" id="Score">Offset: 0 White: 0  Black: 0</h1>
       <h1 class="Chesstext" id="GameOver">Game Over!</h1>
     </div>
     <div class="layoutsBlack">
