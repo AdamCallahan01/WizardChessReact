@@ -52,7 +52,7 @@ export default function PlayVsPlay({ boardWidth }) {
 
   //update all of the variable HTML elements and there visibility
   function updateAllLabels() {
-    document.getElementById("Score").innerHTML = score;
+    document.getElementById("Score").innerHTML = "Offset: " + score + " White: " + score + "Black: " + score;
 
     document.getElementById("whiteCooldown").innerHTML = whiteCooldown;
     document.getElementById("blackCooldown").innerHTML = blackCooldown;
@@ -143,6 +143,9 @@ export default function PlayVsPlay({ boardWidth }) {
       document.getElementById("GameOver").style.visibility = "visible";
     }
 
+    whiteCooldown++;
+    blackCooldown++;
+
     updateAllLabels();
   }
 
@@ -194,7 +197,6 @@ export default function PlayVsPlay({ boardWidth }) {
       promotion: 'q' // always promote to a queen for example simplicity
     });
     setGame(gameCopy);
-    updateOnMove(gameCopy);
 
     // if invalid, setMoveFrom and getMoveOptions
     if (move === null) {
@@ -202,8 +204,7 @@ export default function PlayVsPlay({ boardWidth }) {
       console.log("invalid");
       return;
     }
-    whiteCooldown++;
-    blackCooldown++;
+    updateOnMove(gameCopy);
 
     setMoveFrom('');
     setOptionSquares({});
@@ -520,7 +521,7 @@ export default function PlayVsPlay({ boardWidth }) {
         undo
       </button>
       <h1 class="Chesstext" id="History">Game has not started</h1>
-      <h1 class="Chesstext" id="Score">0</h1>
+      <h1 class="Chesstext" id="Score">Offset: 0 White: 0 Black: 0</h1>
       <h1 class="Chesstext" id="GameOver">Game Over!</h1>
     </div>
     <div class="layoutsBlack">
