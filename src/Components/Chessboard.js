@@ -704,11 +704,12 @@ export default function PlayVsPlay({ boardWidth }) {
       <button
         className="ability-buttonW"
         onClick={() => {
-          if (gameStarted && whiteCooldown > 6) {
+          if (gameStarted && whiteCooldown >= 6) {
             whiteCooldown -= 6;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'w' }, 'd3');
             game.put({ type: 'p', color: 'w' }, 'e3');
+            game.load(game.fen());
           });
           updateAllLabels();
           chessboardRef.current.clearPremoves();
@@ -723,7 +724,7 @@ export default function PlayVsPlay({ boardWidth }) {
     <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown > 6) {
+          if (gameStarted && blackCooldown >= 6) {
             blackCooldown -= 6;
           safeGameMutate((game) => {
             game.turn();
@@ -737,7 +738,7 @@ export default function PlayVsPlay({ boardWidth }) {
       <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown > 4) {
+          if (gameStarted && blackCooldown >= 4) {
             blackCooldown -= 4;
           safeGameMutate((game) => {
             game.remove('d4');
@@ -755,11 +756,12 @@ export default function PlayVsPlay({ boardWidth }) {
       <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown > 6) {
+          if (gameStarted && blackCooldown >= 6) {
             blackCooldown -= 6;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'b' }, 'd6');
             game.put({ type: 'p', color: 'b' }, 'e6');
+            game.load(game.fen());
           });
           chessboardRef.current.clearPremoves();
           updateAllLabels();
