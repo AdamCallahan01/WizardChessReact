@@ -82,6 +82,7 @@ export default function PlayVsPlay({ boardWidth }) {
     document.getElementById("History").innerHTML = GameHistoryString;
 
     //poorly coded score calculations
+    //And checks for king
     score = 0;
     var gameFEN = gameCopy.fen();
     const temp = gameFEN.split(" ");
@@ -129,6 +130,14 @@ export default function PlayVsPlay({ boardWidth }) {
         default:
           break;
       }
+    }
+
+    if (score > 999) {
+      game.undo();
+    }
+
+    if (score < -999) {
+      game.undo();
     }
 
     if (gameStarted === false) {    //remove the layout buttons when game starts
@@ -660,22 +669,23 @@ export default function PlayVsPlay({ boardWidth }) {
     <button
         className="ability-buttonW"
         onClick={() => {
-        if (gameStarted && whiteCooldown > 6) {
-          whiteCooldown -= 6;
+        if (gameStarted && whiteCooldown > 15) {
+          whiteCooldown -= 15;
           safeGameMutate((game) => {
-            game.turn();
+            game.put({ type: 'p', color: 'w' }, 'a1')
+            game.load(game.fen());
           });
           updateAllLabels();
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Merc a pawn: 6
+        Get A Queen: 15
       </button>
       <button
         className="ability-buttonW"
         onClick={() => {
-          if (gameStarted && whiteCooldown > 4) {
-            whiteCooldown -= 4;
+          if (gameStarted && whiteCooldown > 5) {
+            whiteCooldown -= 5;
           safeGameMutate((game) => {
             game.remove('d4');
             game.remove('d5');
@@ -688,13 +698,13 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}
       >
-        Nuke the middle: 4
+        Nuke the middle: 5
       </button>
       <button
         className="ability-buttonW"
         onClick={() => {
-          if (gameStarted && whiteCooldown >= 6) {
-            whiteCooldown -= 6;
+          if (gameStarted && whiteCooldown >= 7) {
+            whiteCooldown -= 7;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'w' }, 'd3');
             game.put({ type: 'p', color: 'w' }, 'e3');
@@ -704,7 +714,7 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Pawn Drop White: 6
+        Pawn Drop White: 7
       </button>
     </div>
     <div class="abilitiesBlack">
@@ -713,22 +723,23 @@ export default function PlayVsPlay({ boardWidth }) {
     <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown >= 6) {
-            blackCooldown -= 6;
+          if (gameStarted && blackCooldown >= 15) {
+            blackCooldown -= 15;
           safeGameMutate((game) => {
-            game.turn();
+            game.put({ type: 'p', color: 'w' }, 'a1')
+            game.load(game.fen());
           });
           updateAllLabels();
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Merc a pawn: 6
+        Get A Queen: 15
       </button>
       <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown >= 4) {
-            blackCooldown -= 4;
+          if (gameStarted && blackCooldown >= 5) {
+            blackCooldown -= 5;
           safeGameMutate((game) => {
             game.remove('d4');
             game.remove('d5');
@@ -740,13 +751,13 @@ export default function PlayVsPlay({ boardWidth }) {
           updateAllLabels();
         }}}
       >
-        Nuke the middle: 4
+        Nuke the middle: 5
       </button>
       <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown >= 6) {
-            blackCooldown -= 6;
+          if (gameStarted && blackCooldown >= 5) {
+            blackCooldown -= 5;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'b' }, 'd6');
             game.put({ type: 'p', color: 'b' }, 'e6');
@@ -756,7 +767,7 @@ export default function PlayVsPlay({ boardWidth }) {
           updateAllLabels();
         }}}
       >
-        Pawn Drop Black: 6
+        Pawn Drop Black: 5
       </button>
     </div>
     <div class="customizations">
