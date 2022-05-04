@@ -2,10 +2,22 @@
     visibility: hidden;
 }
 
+.layoutsWhite { grid-area: lw; }
+.layoutsBlack { grid-area: lb; }
+.board { grid-area: b; }
+.abilitiesWhite { grid-area: aw; }
+.abilitiesBlack { grid-area: ab; }
+.customizations { grid-area: c; }
+.info { grid-area: i; }
+
+
 .outerDiv {
     background-color: rgb(53, 183, 206);
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-areas:
+    'lw lw b b b i lb lb'
+    'aw aw b b b i ab ab'
+    'c c c c c c c c';
     grid-gap: 10px;
 }
 
@@ -47,6 +59,14 @@
     float: left;
     padding: 20px;
     border: 2px solid black;
+}
+
+.info {
+    float: left;
+    padding: 20px;
+    border: 2px solid black;
+    overflow-wrap: break-word;
+    font-size: 10px;
 }
 
 .customizations {

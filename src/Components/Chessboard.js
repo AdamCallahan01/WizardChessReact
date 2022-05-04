@@ -68,16 +68,20 @@ export default function PlayVsPlay({ boardWidth }) {
       whiteButtons[0].style.visibility = "hidden";
       whiteButtons[1].style.visibility = "hidden";
       whiteButtons[2].style.visibility = "hidden";
+      whiteButtons[3].style.visibility = "hidden";
       blackButtons[0].style.visibility = "visible";
       blackButtons[1].style.visibility = "visible";
       blackButtons[2].style.visibility = "visible";
+      blackButtons[3].style.visibility = "visible";
     } else if (turn === 'w') {
       blackButtons[0].style.visibility = "hidden";
       blackButtons[1].style.visibility = "hidden";
       blackButtons[2].style.visibility = "hidden";
+      blackButtons[3].style.visibility = "hidden";
       whiteButtons[0].style.visibility = "visible";
       whiteButtons[1].style.visibility = "visible";
       whiteButtons[2].style.visibility = "visible";
+      whiteButtons[3].style.visibility = "visible";
     }
 
     GameHistoryString = game.history();   //display game history
@@ -147,6 +151,7 @@ export default function PlayVsPlay({ boardWidth }) {
 
     if (gameCopy.game_over()) {   //display message on game end
       document.getElementById("GameOver").style.visibility = "visible";
+      document.getElementsByClassName("outerDiv")[0].style.backgroundColor = "red";
     }
 
     whiteCooldown++;
@@ -502,25 +507,30 @@ export default function PlayVsPlay({ boardWidth }) {
           whiteScore = 0;
           document.getElementById("History").innerHTML = "Game has not started";
           document.getElementById("GameOver").style.visibility = "hidden";
-          document.getElementById("Score").innerHTML = "Offset: 0 White: 0  Black: 0";
+          document.getElementById("Score").innerHTML = "White: 0  Black: 0";
           blackButtons[0].style.visibility = "visible";
           blackButtons[1].style.visibility = "visible";
           blackButtons[2].style.visibility = "visible";
+          blackButtons[3].style.visibility = "visible";
           whiteButtons[0].style.visibility = "visible";
           whiteButtons[1].style.visibility = "visible";
           whiteButtons[2].style.visibility = "visible";
+          whiteButtons[3].style.visibility = "visible";
           gameStarted = false;
           whiteCooldown = 0;
           blackCooldown = 0;
+          document.getElementsByClassName("outerDiv")[0].style.backgroundColor = "rgb(53, 183, 206)";
           chessboardRef.current.clearPremoves();
           updateAllLabels();
         }}
       >
         reset
       </button>
-      <h1 class="Chesstext" id="History">Game has not started</h1>
-      <h1 class="Chesstext" id="Score">Offset: 0 White: 0 Black: 0</h1>
+    </div>
+    <div class="info">
+      <h1 class="Chesstext" id="Score">White: 0 Black: 0</h1>
       <h1 class="Chesstext" id="GameOver">Game Over!</h1>
+      <h1 class="Chesstext" id="History">Game has not started</h1>
     </div>
     <div class="layoutsBlack">
       <h1>Black Layouts:</h1>    
@@ -716,6 +726,21 @@ export default function PlayVsPlay({ boardWidth }) {
       >
         Pawn Drop White: 7
       </button>
+      <button
+        className="ability-buttonW"
+        onClick={() => {
+          if (gameStarted && whiteCooldown >= 13) {
+            whiteCooldown -= 13;
+          safeGameMutate((game) => {
+            game.put({ type: 'N', color: 'w' }, 'a8');
+            game.load(game.fen());
+          });
+          updateAllLabels();
+          chessboardRef.current.clearPremoves();
+        }}}
+      >
+        Paratrooper: 13
+      </button>
     </div>
     <div class="abilitiesBlack">
       <h1>Black Abilities:</h1>
@@ -726,7 +751,7 @@ export default function PlayVsPlay({ boardWidth }) {
           if (gameStarted && blackCooldown >= 15) {
             blackCooldown -= 15;
           safeGameMutate((game) => {
-            game.put({ type: 'q', color: 'b' }, 'a1')
+            game.put({ type: 'q', color: 'b' }, 'a8')
             game.load(game.fen());
           });
           updateAllLabels();
@@ -768,6 +793,21 @@ export default function PlayVsPlay({ boardWidth }) {
         }}}
       >
         Pawn Drop Black: 7
+      </button>
+      <button
+        className="ability-buttonB"
+        onClick={() => {
+          if (gameStarted && blackCooldown >= 13) {
+            blackCooldown -= 13;
+          safeGameMutate((game) => {
+            game.put({ type: 'n', color: 'b' }, 'a1');
+            game.load(game.fen());
+          });
+          chessboardRef.current.clearPremoves();
+          updateAllLabels();
+        }}}
+      >
+        Paratrooper: 13
       </button>
     </div>
     <div class="customizations">
