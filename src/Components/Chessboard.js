@@ -672,7 +672,7 @@ export default function PlayVsPlay({ boardWidth }) {
         if (gameStarted && whiteCooldown > 15) {
           whiteCooldown -= 15;
           safeGameMutate((game) => {
-            game.put({ type: 'p', color: 'w' }, 'a1')
+            game.put({ type: 'Q', color: 'w' }, 'a1')
             game.load(game.fen());
           });
           updateAllLabels();
@@ -726,7 +726,7 @@ export default function PlayVsPlay({ boardWidth }) {
           if (gameStarted && blackCooldown >= 15) {
             blackCooldown -= 15;
           safeGameMutate((game) => {
-            game.put({ type: 'p', color: 'w' }, 'a1')
+            game.put({ type: 'q', color: 'b' }, 'a1')
             game.load(game.fen());
           });
           updateAllLabels();
@@ -756,8 +756,8 @@ export default function PlayVsPlay({ boardWidth }) {
       <button
         className="ability-buttonB"
         onClick={() => {
-          if (gameStarted && blackCooldown >= 5) {
-            blackCooldown -= 5;
+          if (gameStarted && blackCooldown >= 7) {
+            blackCooldown -= 7;
           safeGameMutate((game) => {
             game.put({ type: 'p', color: 'b' }, 'd6');
             game.put({ type: 'p', color: 'b' }, 'e6');
@@ -767,7 +767,7 @@ export default function PlayVsPlay({ boardWidth }) {
           updateAllLabels();
         }}}
       >
-        Pawn Drop Black: 5
+        Pawn Drop Black: 7
       </button>
     </div>
     <div class="customizations">
