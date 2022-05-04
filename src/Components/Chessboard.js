@@ -29,6 +29,8 @@ var changePieces = false;
 var GameHistoryString = "";
 var gameStarted = false;
 var score = 0;
+var blackScore = 0;
+var whiteScore = 0;
 var whiteCooldown = 0;
 var blackCooldown = 0;
 
@@ -52,7 +54,7 @@ export default function PlayVsPlay({ boardWidth }) {
 
   //update all of the variable HTML elements and there visibility
   function updateAllLabels() {
-    document.getElementById("Score").innerHTML = "Offset: " + score + " White:  " + score + "Black: " + score;
+    document.getElementById("Score").innerHTML = "White:  " + whiteScore + " Black: " + blackScore;
 
     document.getElementById("whiteCooldown").innerHTML = whiteCooldown;
     document.getElementById("blackCooldown").innerHTML = blackCooldown;
@@ -132,13 +134,8 @@ export default function PlayVsPlay({ boardWidth }) {
       }
     }
 
-    if (score > 999) {
-      game.undo();
-    }
-
-    if (score < -999) {
-      game.undo();
-    }
+    whiteScore = score;
+    blackScore = 0 - score;
 
     if (gameStarted === false) {    //remove the layout buttons when game starts
       gameStarted = true;
@@ -501,8 +498,11 @@ export default function PlayVsPlay({ boardWidth }) {
             x[i].style.visibility = "visible";
           }
           score = 0;
+          blackScore = 0;
+          whiteScore = 0;
           document.getElementById("History").innerHTML = "Game has not started";
           document.getElementById("GameOver").style.visibility = "hidden";
+          document.getElementById("Score").innerHTML = "Offset: 0 White: 0  Black: 0";
           blackButtons[0].style.visibility = "visible";
           blackButtons[1].style.visibility = "visible";
           blackButtons[2].style.visibility = "visible";
@@ -519,7 +519,7 @@ export default function PlayVsPlay({ boardWidth }) {
         reset
       </button>
       <h1 class="Chesstext" id="History">Game has not started</h1>
-      <h1 class="Chesstext" id="Score">Offset: 0 White: 0  Black: 0</h1>
+      <h1 class="Chesstext" id="Score">Offset: 0 White: 0 Black: 0</h1>
       <h1 class="Chesstext" id="GameOver">Game Over!</h1>
     </div>
     <div class="layoutsBlack">
