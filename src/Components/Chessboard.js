@@ -160,6 +160,38 @@ export default function PlayVsPlay({ boardWidth }) {
     updateAllLabels();
   }
 
+  //Resets everything in-between games
+  function callOnReset() {
+    var x = document.getElementsByClassName("pregame");
+    for (var i = 0; i < x.length; i++) {
+      x[i].style.visibility = "visible";
+    }
+    score = 0;
+    blackScore = 0;
+    whiteScore = 0;
+    document.getElementById("History").innerHTML = "Game has not started";
+    document.getElementById("GameOver").style.visibility = "hidden";
+    document.getElementById("Score").innerHTML = "White: 0  Black: 0";
+    blackButtons[0].style.visibility = "visible";
+    blackButtons[1].style.visibility = "visible";
+    blackButtons[2].style.visibility = "visible";
+    blackButtons[3].style.visibility = "visible";
+    whiteButtons[0].style.visibility = "visible";
+    whiteButtons[1].style.visibility = "visible";
+    whiteButtons[2].style.visibility = "visible";
+    whiteButtons[3].style.visibility = "visible";
+    gameStarted = false;
+    whiteCooldown = 0;
+    blackCooldown = 0;
+    whiteLayout = "PPPPPPPP/RNBQKBNR";
+    blackLayout = "rnbqkbnr/pppppppp";
+    whiteRows = 2;
+    blackRows = 2;
+    document.getElementsByClassName("outerDiv")[0].style.backgroundColor = "#9ea8aa";
+    chessboardRef.current.clearPremoves();
+    updateAllLabels();
+  }
+
   function getMoveOptions(square) {
     const moves = game.moves({
       square,
@@ -330,7 +362,35 @@ export default function PlayVsPlay({ boardWidth }) {
   return (
     <div class='outerDiv'>
     <div class="layoutsWhite">
-      <h1>White Layouts:</h1>
+      <h1>White Classes:</h1>
+      <button
+        className="pregame"
+        onClick={() => {
+          whiteRows = 2;
+          whiteLayout = "PPPPPPPP/RNBQKBNR";
+          console.log(whiteLayout);
+          safeGameMutate((game) => {
+            switch(blackRows) {
+              case 1:
+                game.load(blackLayout + '/8/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+                break;
+              case 2:
+                game.load(blackLayout + '/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+                break;
+              case 3:
+                game.load(blackLayout + '/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+                break;
+              case 4:
+                game.load(blackLayout + '/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+                break;
+              default:
+                break;
+            }
+          });
+        }}
+      >
+        Wizard
+      </button>
       <button
         className="pregame"
         onClick={() => {
@@ -357,7 +417,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Queens
+        Witch
       </button>
       <button
         className="pregame"
@@ -384,7 +444,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Knights
+        Battlemage
       </button>
       <button
         className="pregame"
@@ -411,7 +471,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Bishops
+        Cleric
       </button>
       <button
         className="pregame"
@@ -438,27 +498,27 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Pawns
+        Necromancer
       </button>
       <button
         className="pregame"
         onClick={() => {
-          whiteRows = 1;
-          whiteLayout = "RRRRKRRR";
+          whiteRows = 2;
+          whiteLayout = "4R3/RRRRKRRR";
           console.log(whiteLayout);
           safeGameMutate((game) => {
             switch(blackRows) {
               case 1:
-                game.load(blackLayout + '/8/8/8/8/8/8/RRRRKRRR w KQkq - 0 1');
+                game.load(blackLayout + '/8/8/8/8/8/4R3/RRRRKRRR w KQkq - 0 1');
                 break;
               case 2:
-                game.load(blackLayout + '/8/8/8/8/8/RRRRKRRR w KQkq - 0 1');
+                game.load(blackLayout + '/8/8/8/8/4R3/RRRRKRRR w KQkq - 0 1');
                 break;
               case 3:
-                game.load(blackLayout + '/8/8/8/8/RRRRKRRR w KQkq - 0 1');
+                game.load(blackLayout + '/8/8/8/4R3/RRRRKRRR w KQkq - 0 1');
                 break;
               case 4:
-                game.load(blackLayout + '/8/8/8/RRRRKRRR w KQkq - 0 1');
+                game.load(blackLayout + '/8/8/4R3/RRRRKRRR w KQkq - 0 1');
                 break;
               default:
                 break;
@@ -466,13 +526,13 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Rooks
+        Geomancer
       </button>
     </div>
     <div class="board">
       <Chessboard
         id="Chess"
-        animationDuration={1}
+        animationDuration={100}
         boardWidth={boardWidth}
         position={game.fen()}
         onSquareClick={onSquareClick}
@@ -492,48 +552,43 @@ export default function PlayVsPlay({ boardWidth }) {
         customPieces={customPieces()}
         ref={chessboardRef}
       />
-      <button
-        className="rc-button"
-        onClick={() => {
-          safeGameMutate((game) => {
-            game.reset();
-          });
-          var x = document.getElementsByClassName("pregame");
-          for (var i = 0; i < x.length; i++) {
-            x[i].style.visibility = "visible";
-          }
-          score = 0;
-          blackScore = 0;
-          whiteScore = 0;
-          document.getElementById("History").innerHTML = "Game has not started";
-          document.getElementById("GameOver").style.visibility = "hidden";
-          document.getElementById("Score").innerHTML = "White: 0  Black: 0";
-          blackButtons[0].style.visibility = "visible";
-          blackButtons[1].style.visibility = "visible";
-          blackButtons[2].style.visibility = "visible";
-          blackButtons[3].style.visibility = "visible";
-          whiteButtons[0].style.visibility = "visible";
-          whiteButtons[1].style.visibility = "visible";
-          whiteButtons[2].style.visibility = "visible";
-          whiteButtons[3].style.visibility = "visible";
-          gameStarted = false;
-          whiteCooldown = 0;
-          blackCooldown = 0;
-          document.getElementsByClassName("outerDiv")[0].style.backgroundColor = "rgb(53, 183, 206)";
-          chessboardRef.current.clearPremoves();
-          updateAllLabels();
-        }}
-      >
-        reset
-      </button>
     </div>
     <div class="info">
       <h1 class="Chesstext" id="Score">White: 0 Black: 0</h1>
       <h1 class="Chesstext" id="GameOver">Game Over!</h1>
-      <h1 class="Chesstext" id="History">Game has not started</h1>
+      <h2 class="Chesstext" id="History">Game has not started</h2>
     </div>
     <div class="layoutsBlack">
-      <h1>Black Layouts:</h1>    
+      <h1>Black Classes:</h1>
+      <button
+        className="pregame"
+        onClick={() => {
+          safeGameMutate((game) => {
+            blackRows = 2;
+            blackLayout = 'rnbqkbnr/pppppppp';
+            console.log(blackLayout);
+            switch(whiteRows) {
+              case 1:
+                game.load('rnbqkbnr/pppppppp/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              case 2:
+                game.load('rnbqkbnr/pppppppp/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                console.log(whiteLayout);
+                break;
+              case 3:
+                game.load('rnbqkbnr/pppppppp/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              case 4:
+                game.load('rnbqkbnr/pppppppp/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                break;
+              default:
+                break;
+            }
+          });
+        }}
+      >
+        Wizard
+      </button>  
       <button
         className="pregame"
         onClick={() => {
@@ -561,7 +616,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Queens
+        Witch
       </button>
       <button
         className="pregame"
@@ -588,7 +643,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Knights
+        Battlemage
       </button>
       <button
         className="pregame"
@@ -615,7 +670,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Bishops
+        Cleric
       </button>
       <button
         className="pregame"
@@ -642,27 +697,27 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Pawns
+        Necromancer
       </button>
       <button
         className="pregame"
         onClick={() => {
           safeGameMutate((game) => {
-            blackRows = 1;
-            blackLayout = 'rrrrkrrr';
+            blackRows = 2;
+            blackLayout = 'rrrrkrrr/4r3';
             console.log(blackLayout);
             switch(whiteRows) {
               case 1:
-                game.load('rrrrkrrr/8/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                game.load('rrrrkrrr/4r3/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
                 break;
               case 2:
-                game.load('rrrrkrrr/8/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                game.load('rrrrkrrr/4r3/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
                 break;
               case 3:
-                game.load('rrrrkrrr/8/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                game.load('rrrrkrrr/4r3/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
                 break;
               case 4:
-                game.load('rrrrkrrr/8/8/8/' + whiteLayout + ' w KQkq - 0 1');
+                game.load('rrrrkrrr/4r3/8/8/' + whiteLayout + ' w KQkq - 0 1');
                 break;
               default:
                 break;
@@ -670,7 +725,7 @@ export default function PlayVsPlay({ boardWidth }) {
           });
         }}
       >
-        Rooks
+        Geomancer
       </button>
     </div>
     <div class="abilitiesWhite">
@@ -689,7 +744,7 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Get A Queen: 15
+        Recruit a Witch: 15
       </button>
       <button
         className="ability-buttonW"
@@ -708,7 +763,7 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}
       >
-        Nuke the middle: 5
+        Fireball: 5
       </button>
       <button
         className="ability-buttonW"
@@ -724,7 +779,7 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Pawn Drop White: 7
+        Raise the Dead: 7
       </button>
       <button
         className="ability-buttonW"
@@ -739,11 +794,11 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Paratrooper: 13
+        Enchant Enemy: 13
       </button>
     </div>
     <div class="abilitiesBlack">
-      <h1>Black Abilities:</h1>
+      <h1>Black Spells:</h1>
       <h2 id="blackCooldown">0</h2>
     <button
         className="ability-buttonB"
@@ -758,7 +813,7 @@ export default function PlayVsPlay({ boardWidth }) {
           chessboardRef.current.clearPremoves();
         }}}
       >
-        Get A Queen: 15
+        Recruit a Witch: 15
       </button>
       <button
         className="ability-buttonB"
@@ -776,7 +831,7 @@ export default function PlayVsPlay({ boardWidth }) {
           updateAllLabels();
         }}}
       >
-        Nuke the middle: 5
+        Fireball: 5
       </button>
       <button
         className="ability-buttonB"
@@ -792,7 +847,7 @@ export default function PlayVsPlay({ boardWidth }) {
           updateAllLabels();
         }}}
       >
-        Pawn Drop Black: 7
+        Raise the Dead: 7
       </button>
       <button
         className="ability-buttonB"
@@ -807,11 +862,22 @@ export default function PlayVsPlay({ boardWidth }) {
           updateAllLabels();
         }}}
       >
-        Paratrooper: 13
+        Enchant Enemy: 13
       </button>
     </div>
     <div class="customizations">
       <h1>Customizations:</h1>
+      <button
+        className="rc-button"
+        onClick={() => {
+          safeGameMutate((game) => {
+            game.reset();
+            callOnReset();
+          });
+        }}
+      >
+        reset
+      </button>
       <button
         className="customization-button"
         onClick={() => {

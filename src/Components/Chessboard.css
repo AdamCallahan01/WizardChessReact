@@ -12,19 +12,19 @@
 
 
 .outerDiv {
-    background-color: rgb(53, 183, 206);
+    background-color: #9ea8aa;
     display: grid;
     grid-template-areas:
-    'lw lw b b b i lb lb'
-    'aw aw b b b i ab ab'
-    'c c c c c c c c';
+    'lw lw b b b b i lb lb'
+    'aw aw b b b b i ab ab'
+    'c c c c c c c c c';
     grid-gap: 10px;
 }
 
 .board {
     float: center;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     grid-row-end: span 2;
 }
 
@@ -40,39 +40,39 @@
 .layoutsWhite {
     float: center;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .layoutsBlack {
     float: left;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .abilitiesWhite {
     float: left;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .abilitiesBlack {
     float: left;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 .info {
     float: left;
     padding: 20px;
-    border: 2px solid black;
-    overflow-wrap: break-word;
+    /* border: 2px solid black; */
+    overflow-wrap: normal;
     font-size: 10px;
 }
 
 .customizations {
-    float: left;
+    float: center;
     padding: 20px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     grid-column-end: span 3;
 }
 
@@ -92,10 +92,10 @@ button.customization-button {
 }
 
 button.pregame {
-    background-color: #4CAF50;
-    border: 5px solid blue;
-    color: white;
-    padding: 15px 32px;
+    background-color: #3784a4;
+    border: 3px solid #543c635d;
+    color: black;
+    padding: 10px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -106,42 +106,44 @@ button.pregame {
 
 button.pregame:hover {
     background-color: #2c6e2e;
-    color: white;
+    color: black;
 }
 
 button.ability-buttonW {
-    background-color: #4CAF50;
-    border: 5px solid blue;
+    background-color: #dc9840;
+    border: 3px solid black;
     color: black;
-    padding: 10px 16px;
+    padding: 10px 8px;
     text-align: center;
+    margin-top: 3px;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     border-radius: 4px;
-    transition-duration: .4s;
+    transition-duration: .5s;
 }
 
 button.ability-buttonW:hover {
-    background-color: #2c6e2e;
+    background-color: #e18712;
     color: white;
 }
 
 button.ability-buttonB {
-    background-color: #4CAF50;
-    border: 5px solid blue;
+    background-color: #dc9840;
+    border: 3px solid black;
     color: black;
-    padding: 10px 16px;
+    padding: 10px 8px;
     text-align: center;
+    margin-top: 3px;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     border-radius: 4px;
-    transition-duration: .4s;
+    transition-duration: .5s;
 }
 
 button.ability-buttonB:hover {
-    background-color: #2c6e2e;
+    background-color: #e18712;
     color: white;
 }
 
