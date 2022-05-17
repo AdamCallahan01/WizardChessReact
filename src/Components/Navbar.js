@@ -74,7 +74,7 @@ function Navbar() {
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                VERY IMPORTANT
+                Stuff
               </Link>
             </li>
 

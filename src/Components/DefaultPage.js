@@ -13,19 +13,11 @@ function DefaultPage() {
       <div className='hero-btns'>
         <Button
           className='btns'
-          buttonStyle='btn--outline'
+          buttonStyle='btn--primary'
           buttonSize='btn--large'
           onClick={<Link to='/layouts'></Link>}
         >
           Play the game!
-        </Button>
-        <Button
-          className='btns'
-          buttonStyle='btn--primary'
-          buttonSize='btn--large'
-          onClick={console.log('hey')}
-        >
-          Final Video Presentation <i className='far fa-play-circle' />
         </Button>
       </div>
     </div>

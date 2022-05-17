@@ -360,7 +360,7 @@ export default function PlayVsPlay({ boardWidth }) {
   };
 
   return (
-    <div class='outerDiv'>
+    <div class='outerDiv' id='big123'>
     <div class="layoutsWhite">
       <h1>White Classes:</h1>
       <button
@@ -729,7 +729,7 @@ export default function PlayVsPlay({ boardWidth }) {
       </button>
     </div>
     <div class="abilitiesWhite">
-      <h1>White Abilities:</h1>
+      <h1>White Spells:</h1>
       <h2 id="whiteCooldown">0</h2>
     <button
         className="ability-buttonW"
@@ -868,7 +868,7 @@ export default function PlayVsPlay({ boardWidth }) {
     <div class="customizations">
       <h1>Customizations:</h1>
       <button
-        className="rc-button"
+        className="customization-button"
         onClick={() => {
           safeGameMutate((game) => {
             game.reset();

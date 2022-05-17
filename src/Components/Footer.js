@@ -7,10 +7,10 @@ function Footer() {
     <div className='footer-container'>
       <section className='footer-subscription'>
         <p className='footer-subscription-heading'>
-          I'm really just messing around here to see what works
+          Footer test
         </p>
         <p className='footer-subscription-text'>
-          Pete I spent way too much time on this
+          Chess is fun
         </p>
       </section>
       <div class='footer-links'>
